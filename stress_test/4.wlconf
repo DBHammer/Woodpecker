@@ -1,0 +1,34 @@
+
+## 基本信息项
+thread_number = 100
+thread_run_number = 2000
+
+DBMS_user = admin
+DBMS_password = admin
+
+DBMS = cedar
+DB = woodpecker
+
+src_server = 10.11.1.197;10.11.1.196
+dest_server = 10.11.1.190;10.11.1.190
+service_port = 14880
+
+
+## select配置项
+table_size = 200000
+
+is_prepared = true
+
+schema_type = 1
+
+SQL_type = 11
+distribution = uniform
+
+value_range = 0
+
+is_transaction = false
+each_tx_SQL_count = 0
+
+#均值和方差
+mean = 100000
+variance = 10000
