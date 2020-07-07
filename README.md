@@ -29,7 +29,7 @@ Woodpecker是华东师范大学数据科学与工程学院（简称“DaSE”）
 
 Woodpecker 的总体架构如下图，包括两个模块:客户端测试模块和服务器 模块。其中客户端测试模块主要进行测试环境部署，对测试任务进行解析、分发 和收集统计信息等。服务器模块是数据库系统所处的环境，用于执行负载任务。 下面详细介绍各模块的组成。
 
-![image-20200707170434521](/Users/xiangzhaokun/Library/Application Support/typora-user-images/image-20200707170434521.png)
+![image-20200707170434521](https://tva1.sinaimg.cn/large/007S8ZIlgy1ggiirvrz8rj30x10lf0wh.jpg)
 
 
 
