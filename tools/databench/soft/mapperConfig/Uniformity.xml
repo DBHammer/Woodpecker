@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mapper.UniformityMapper">
+
+	<!-- 查询账户表的总资金 -->
+   	<select id="sumAccount" resultType="java.math.BigDecimal">
+     	select sum(account_bale) from account
+  	</select>
+  	<!-- 统计交易日志表tranlog的流水号是否与网点流水号一致 -->
+    <select id="tranlogBranchCount" resultType="java.lang.Integer">
+    	select count(temp.a) from (select tranlog_branchid as a,(sum(1)+1) as b from tranlog group by tranlog_branchid) temp,
+		branch where temp.a=branch_id and branch_seq&lt;&gt;temp.b
+    </select>
+    <!-- 统计交易日志表tranloghistory的流水号是否与网点流水号一致 -->
+    <select id="tranlogHistoryBranchCount" resultType="java.lang.Integer">
+    	select count(temp.a) from (select tranlog_branchid as a,(sum(1)+1) as b from tranlog_history group by tranlog_branchid) temp,
+		branch where temp.a=branch_id and branch_seq&lt;&gt;temp.b
+    </select>
+    
+    <!-- 统计交易流水表tranlist借贷双方总金额是否一致 -->
+    <select id="sumTranlistCount" resultType="com.pojo.TranlistCount">
+    	    select tranlist_dcdir,sum(tranlist_bale) as tranlist_total from tranlist group by tranlist_dcdir;
+    </select>
+    
+    <!-- 按条件统计交易日志表tranlog数量 -->
+    <select id="tranlogCount" resultType="java.lang.Integer" parameterType="com.pojo.Tranlog">
+    	select count(tranlog_trancfgid) from tranlog where 1=1
+        <if test="tranlog_trancfgid != null and tranlog_trancfgid !=''">
+            and tranlog_trancfgid = #{tranlog_trancfgid}
+        </if>
+    	<if test="tranlog_success != null and tranlog_success !=''">
+			and tranlog_success = #{tranlog_success}
+        </if>
+        <if test="tranlog_fld1 != null and tranlog_fld1 !=''">
+			and tranlog_fld1 = #{tranlog_fld1}
+        </if>
+        <if test="tranlog_strtime != null">
+           and tranlog_strtime &lt; #{tranlog_strtime}
+        </if>
+    </select>
+    <!-- 按条件统计交易流水表tranlist数量 -->
+    <select id="tranlistCount" resultType="java.lang.Integer" parameterType="com.pojo.Tranlist">
+    	select count(1) from tranlist where 1=1
+    	<if test="tranlist_fld1 != null and tranlist_fld1 !=''">
+            and tranlist_fld1 = #{tranlist_fld1}
+        </if>
+         <if test="tranlist_dcdir != null and tranlist_dcdir !=''">
+            and tranlist_dcdir = #{tranlist_dcdir}
+        </if>
+    </select>
+     <!-- 通过tranlog表统计不同业务的耗时情况 -->
+    <select id="tranlogCostTimeCount" resultType="com.pojo.TranlogCount" parameterType="java.lang.String">
+    	SELECT
+			tranlog_trancfgid as trancfg_type,
+			sum(tranlog_tmcost) as total_cost,
+			avg(tranlog_tmcost) as avg_cost,
+			max(tranlog_tmcost) as max_cost,
+			count(1) as num
+		FROM
+			tranlog
+		where tranlog_fld1 = #{tranlog_fld1}
+		GROUP BY
+			tranlog_trancfgid
+    </select>
+    <!-- 通过chkuplog表统计ACID测试成功情况 -->
+    <select id="chkuplogCount" resultType="com.pojo.ChkuplogCount">
+	    SELECT
+			chkuplog_type,
+			chkuplog_success,
+			count(1) as num
+		FROM
+			chkuplog
+		GROUP BY chkuplog_type,chkuplog_success
+	</select>
+	<!-- 资产盘点金额汇总 -->
+	<select id="accountInventory" resultType="java.lang.String">
+			SELECT
+				c.customer_id
+			FROM
+				customer c,
+				(
+					SELECT
+						SUM(account_bale) r,
+						account_custid
+					FROM
+						account
+					GROUP BY
+						account_custid
+				) t
+			WHERE
+				c.customer_id = t.account_custid
+			AND c.customer_bale &lt;&gt; t.r
+	</select>
+	<!-- 统计存取款总额差量余额 -->
+   	<select id="sumIncressAccount" parameterType="java.lang.String" resultType="java.math.BigDecimal">
+     	select sum(tranlist_fld3) from tranlist where tranlist_fld2 = #{tranlist_fld2}
+  	</select>
+</mapper>

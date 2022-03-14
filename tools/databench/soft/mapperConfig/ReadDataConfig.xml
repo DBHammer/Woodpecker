@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mapper.ReadDataConfig">
+    <!-- 根据数据配置id获取配置信息 -->
+    <select id="readDataCfg" parameterType="java.lang.String" resultType="com.pojo.DataConfig">
+        select datacfg_id,datacfg_brhnum,
+               datacfg_sjnonum,datacfg_accnum,datacfg_cusnum
+        from datacfg where datacfg_id = #{datacfg_id}
+    </select>
+    <!-- 获取所有的数据配置信息 -->
+    <select id="readAllDataCfg" resultType="com.pojo.DataConfig">
+        select datacfg_id,datacfg_brhnum,
+               datacfg_sjnonum,datacfg_accnum,datacfg_cusnum
+        from datacfg order by datacfg_id asc
+    </select>
+</mapper>
