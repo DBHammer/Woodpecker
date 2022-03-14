@@ -1,8 +1,7 @@
-Session session = START_BENCHMARK[10.24.14.218;22;ubuntu];
-SYSBENCH_OLTP[session;prepare;mysql;oltp_read_write;sysbench;127.0.0.1;4000;root;;2;5000;10;0;30;5;;1];
-SYSBENCH_OLTP[session;run;mysql;oltp_read_write;sysbench;127.0.0.1;4000;root;;2;5000;10;0;30;5;;1];
-SYSBENCH_OLTP[session;run;mysql;oltp_read_only;sysbench;10.11.6.120;5515;qswang;qswang;2;5000;10;0;20;10;;2];
-SYSBENCH_OLTP[session;cleanup;mysql;oltp_read_write;sysbench;127.0.0.1;4000;root;;2;5000;10;0;20;10;;1];
+Session session = START_BENCHMARK[172.25.72.230;22;ysh];
+SYSBENCH_OLTP[session;prepare;mysql;oltp_read_write;sysbench;172.25.72.230;3306;root;123456;2;5000;10;0;30;5;;1];
+SYSBENCH_OLTP[session;run;mysql;oltp_read_write;sysbench;172.25.72.230;3306;root;123456;2;5000;10;0;30;5;;1];
+SYSBENCH_OLTP[session;cleanup;mysql;oltp_read_write;sysbench;172.25.72.230;3306;root;123456;2;5000;10;0;20;10;;1];
 
 SYSBENCH_CPU[session;20;20;5;0;cpuoutput;1];
 SYSBENCH_IO[session;100;1M;1G;seqwr;sync;128;0;off;on;fsync;0;1.5;2;5;0;iooutput;1];

@@ -46,8 +46,6 @@ public class BenchmarkSQLTools {
 //        else if(){ postgresql 可以根据自己测试数据库的需求添加
 //            this.configFile = "./tools/BenchmarkTools/benchmarksql/run/props.pg";
 //        }
-
-
             this.config = new ArrayList<>();
             this.driver = MySQLOperation.getDriver();
             this.IP = MySQLOperation.getIP();

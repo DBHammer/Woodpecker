@@ -1,0 +1,27 @@
+##获取数据库连接
+Connection conn = GET_CONN[master];
+##获取SQL执行器
+Statement stmt = GET_STAT[conn];
+##获取预编译SQL执行器
+PStatement pstmt1 = GET_PSTAT[conn; "update t1 set c3 = ? where c1 = ?"; String, int];
+PStatement pstmt2 = GET_PSTAT[conn; "insert into t1 values (?, ?, ?)"; int, Decimal, String];
+##创建表，添加数据
+SQL["drop table if exists t1"; stmt];
+SQL["create table t1 (c1 int primary key, c2 decimal(4,2), c3 varchar(100))"; stmt];
+SQL["insert into t1 values (1, 1.1, 'aaaaa'), (2, 2.2, 'bbbbb')"; stmt];
+##执行预编译SQL
+PSQL[pstmt1; "ccccc", 1];
+PSQL[pstmt1; "ddddd", 2];
+Decimal var = 3.3;
+PSQL[pstmt2; 3, var, "eeeee"];
+##获取运行结果集
+ResultSet rs0 = SQL["select * from t1"; stmt];
+##指定理想结果集
+IdealResultSet<int,Decimal,String> irs0;
+##导入该理想结果集
+IMPORT_IRS["psql_test"; irs0 0];
+##比较数据库运行结果集与理想结果集
+VERIFY[rs0;==;irs0];
+##删除表
+SQL["drop table if exists t1"; stmt];
+

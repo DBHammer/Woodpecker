@@ -48,15 +48,16 @@ public class OltpbenchProcessor extends Executor implements Keyword
         String bench = parts[1].trim();
         String isolation = parts[2].trim();
         String scalefactor = parts[3].trim();
-        String terminal = parts[4].trim();
-        String time = parts[5].trim();
-        String rate = parts[6].trim();
+        String loaderThreads = parts[4].trim();
+        String terminal = parts[5].trim();
+        String time = parts[6].trim();
+        String rate = parts[7].trim();
 
-        Boolean create = Boolean.parseBoolean(parts[7]);
-        Integer round = Integer.parseInt(parts[12]);
+        Boolean create = Boolean.parseBoolean(parts[8]);
+        Integer round = Integer.parseInt(parts[13]);
 
      //   OltpbenchTools oltpbenchTools = new OltpbenchTools("./tools/BenchmarkTools/oltpbench/" + configFile);
-        OltpbenchTools oltpbenchTools = new OltpbenchTools(bench, isolation,scalefactor,terminal,time,rate);
+        OltpbenchTools oltpbenchTools = new OltpbenchTools(bench, isolation,scalefactor,loaderThreads, terminal,time,rate);
 
         oltpbenchTools.create_database(bench,create);
         for(int i=0; i<round; i++) {

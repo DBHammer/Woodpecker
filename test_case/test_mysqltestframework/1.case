@@ -3,4 +3,4 @@
 MYSQL_TEST_FRAMEWORK["test"; 1];
 
 ## 指定特殊测试用例
-MYSQL_TEST_FRAMEWORK["test"; "example"; 2];
+MYSQL_TEST_FRAMEWORK["test"; "example"; 1];

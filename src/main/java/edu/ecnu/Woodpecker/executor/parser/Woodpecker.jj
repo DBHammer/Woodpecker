@@ -188,6 +188,8 @@ TOKEN :
 | <BATCH_SQL : "BATCH_SQL" >
 | <END_BATCH_SQL : "END_BATCH_SQL">
 | <NMON : "NMON">
+| <INIT_DATABENCH_CONFIG : "INIT_DATABENCH_CONFIG">
+| <START_DATABENCH : "START_DATABENCH">
 }
 
 
@@ -267,6 +269,7 @@ TOKEN:
 |   <ON_OFF : "on" | "off" >
 |   <TOUCHSTONE_C : "conf/touchstone.conf">
 |   <FILE_PATH : ("/") + (["0"-"9","a"-"z","A"-"Z","/"]) + (".")?(["a"-"z","A"-"Z","/"]) + ("/")? >
+|   <DATABENCH_ISOLATION_LEVEL : "RR" |"RC" >
 }
 
 /* LITERALS */
@@ -393,6 +396,7 @@ TOKEN :
   < #LETTER:
       [  // all chars for which Character.isIdentifierStart is true
          "$",
+         ".",
          "A"-"Z",
          "_",
          "a"-"z",
@@ -669,6 +673,7 @@ TOKEN :
       [  // all chars for which Character.isIdentifierPart is true
          "\u0000"-"\u0008",
          "\u000e"-"\u001b",
+         ".",
          "$",
          "0"-"9",
          "A"-"Z",
@@ -1626,7 +1631,8 @@ void FunctionStatement() throws Exception :
     table() | column() | import_tbl() | clear_tbl() | parall() | mid_parall() | end_parall() |
     oltpbench()  | benchmarksql() |  sysbench_oltp() | start_benchmark() | end_benchmark() | mysql_test_framework() |
 	sysbench_cpu() | sysbench_io() | sysbench_mem() | sysbench_threads() | sysbench_mutex() | touchstone() |
-	cpu() | mem() | disk() | net() | file() | tpch() | batch_sql() | end_batch_sql() | nmon()
+	cpu() | mem() | disk() | net() | file() | tpch() | batch_sql() | end_batch_sql() | nmon() |
+	init_databench_config () | start_databench()
 	)
 		{
 			switch(staBit)
@@ -2564,7 +2570,7 @@ void nmon():
         staBit |= 1;
         pwLine.append("nmon[").append(host.toString());
     }
-    <SEMICOLON>user=<STRING_LITERAL>
+    <SEMICOLON>user=<IDENTIFIER>
     {
         pwLine.append(";").append(user.toString());
     }
@@ -2583,6 +2589,7 @@ void oltpbench():
 	Token bench=null;
 	Token isolation=null;
 	Token scalefactor=null;
+    Token loaderThreads=null;
 	Token terminal=null;
 	Token time = null;
 	Token rate = null;
@@ -2609,7 +2616,12 @@ void oltpbench():
         pwLine.append(";");
         pwLine.append(scalefactor.toString());
      }
-     <SEMICOLON>terminal=<INTEGER_LITERAL>
+     <SEMICOLON>loaderThreads=<INTEGER_LITERAL>
+     {
+        pwLine.append(";");
+        pwLine.append(loaderThreads.toString());
+     }
+    <SEMICOLON>terminal=<INTEGER_LITERAL>
      {
         pwLine.append(";");
         pwLine.append(terminal.toString());
@@ -3552,3 +3564,69 @@ void end_batch_sql():
 		pwLine.append("end_batch_sql");
 	}
 }
+void init_databench_config():
+{
+    Token businesstest_initSize = null;
+    Token businesstest_minSize = null;
+    Token businesstest_maxSize = null;
+    Token local_initSize = null;
+    Token local_minSize = null;
+    Token local_maxSize = null;
+}
+{
+    <INIT_DATABENCH_CONFIG> <LBRACKET> businesstest_initSize = <INTEGER_LITERAL>
+    {
+        staBit|=1;
+        pwLine.append("init_databench_config["+businesstest_initSize.toString());
+    }
+    <SEMICOLON> businesstest_minSize = <INTEGER_LITERAL>
+    {
+        pwLine.append(";").append(businesstest_minSize.toString());
+    }
+     <SEMICOLON> businesstest_maxSize = <INTEGER_LITERAL>
+    {
+        pwLine.append(";").append(businesstest_maxSize.toString());
+    }
+    <SEMICOLON> local_initSize = <INTEGER_LITERAL>
+    {
+        pwLine.append(";").append(local_initSize.toString());
+    }
+    <SEMICOLON> local_minSize = <INTEGER_LITERAL>
+    {
+        pwLine.append(";").append(local_minSize.toString());
+    }
+    <SEMICOLON> local_maxSize = <INTEGER_LITERAL> <RBRACKET>
+    {
+        pwLine.append(";").append(local_maxSize.toString()).append("]");
+    }
+}
+
+void start_databench():
+{
+    Token datacfg_id = null;
+    Token trancfg_id = null;
+    Token isolation_level = null;
+    Token round = null;
+}
+{
+    <START_DATABENCH> <LBRACKET> datacfg_id = <INTEGER_LITERAL>
+    {
+        staBit|=1;
+        pwLine.append("start_databench[" + datacfg_id.toString());
+    }
+    <SEMICOLON> trancfg_id = <INTEGER_LITERAL>
+    {
+        pwLine.append(";").append(trancfg_id.toString());
+    }
+     <SEMICOLON> isolation_level = <DATABENCH_ISOLATION_LEVEL>
+    {
+        pwLine.append(";").append(isolation_level.toString());
+    }
+    <SEMICOLON>round=<INTEGER_LITERAL> <RBRACKET>
+    {
+     	pwLine.append(";");
+     	pwLine.append(round.toString());
+     	pwLine.append("]");
+    }
+}
+

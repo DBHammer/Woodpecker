@@ -6,34 +6,19 @@ import edu.ecnu.Woodpecker.controller.PostgreSQLOperation;
 import edu.ecnu.Woodpecker.controller.TestController;
 import edu.ecnu.Woodpecker.log.WpLog;
 import edu.ecnu.Woodpecker.util.Util;
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.Element;
+import org.dom4j.io.OutputFormat;
+import org.dom4j.io.SAXReader;
+import org.dom4j.io.XMLWriter;
 
 import java.io.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
-
-
-import java.util.Calendar;
 import java.util.List;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-
-
-
-import org.dom4j.Document;
-import org.dom4j.DocumentException;
-import org.dom4j.DocumentHelper;
-import org.dom4j.Element;
-import org.dom4j.io.OutputFormat;
-import org.dom4j.io.SAXReader;
-import org.dom4j.io.XMLWriter;
-
-
 
 
 /**
@@ -53,11 +38,12 @@ public class OltpbenchTools {
     private String bench;
     private String isolation;
     private String scalefactor;
+    private String loaderThreads;
     private String terminal;
     private String time;
     private String rate;
 
-    public OltpbenchTools(String bench, String isolation, String scalefactor, String terminal, String time, String rate){
+    public OltpbenchTools(String bench, String isolation, String scalefactor, String loaderThreads, String terminal, String time, String rate){
         if(TestController.getDatabase().getBrand().equalsIgnoreCase("mysql") || TestController.getDatabase().getBrand().equalsIgnoreCase("tidb")) {
             // tidb和mysql都是mysql语法兼容的数据库
             this.driver = MySQLOperation.getDriver();
@@ -79,6 +65,7 @@ public class OltpbenchTools {
             this.bench = bench;
             this.isolation = isolation;
             this.scalefactor = scalefactor;
+            this.loaderThreads = loaderThreads;
             this.terminal = terminal;
             this.time = time;
             this.rate = rate;
@@ -94,19 +81,17 @@ public class OltpbenchTools {
 
         String[] parts = Util.removeBlankElement(keyword.split("\\[|;|]"));
         String bench = parts[1];
-        Boolean create = Boolean.parseBoolean(parts[7]);
-        Boolean load = Boolean.parseBoolean(parts[8]);
-        Boolean execute = Boolean.parseBoolean(parts[9]);
-        Integer sampling_window = Integer.parseInt(parts[10]);
-        String outputfile = parts[11];
-
-
+        Boolean create = Boolean.parseBoolean(parts[8]);
+        Boolean load = Boolean.parseBoolean(parts[9]);
+        Boolean execute = Boolean.parseBoolean(parts[10]);
+        Integer sampling_window = Integer.parseInt(parts[11]);
+        String outputfile = parts[12];
 
         String cmd = "cd tools/BenchmarkTools/oltpbench && ./oltpbenchmark -b " + bench + " -c " + "config/" + bench + "_config.xml" + " --create " + create.toString() + " --load " + load.toString() +
                 " --execute " + execute.toString() + " -s " + sampling_window + " -o " +outputfile;
         WpLog.recordLog(LogLevelConstant.INFO,"开始执行oltpbench");
-        String result = exec(cmd).toString();
         WpLog.recordLog(LogLevelConstant.INFO, "oltpbench命令: "+cmd);
+        String result = exec(cmd).toString();
         System.out.println("==========获得值=============");
         System.out.println(result);
         TestController.reportGenerator.appendNewBenchmark("OLTP-BENCH 测试报告", "```")
@@ -138,7 +123,12 @@ public class OltpbenchTools {
         Document document = sr.read(configPath);
         Element root = document.getRootElement();
 
+
         List<Element> elements = root.elements();
+        if(!root.elements().contains("loaderThreads")){//配置文件中需要增加loaderThreads节点
+            Element loadThrds = root.addElement("loaderThreads");
+            loadThrds.setText(this.loaderThreads);
+        }
         for (Element element : elements) {
 
             if(TestController.getDatabase().getBrand().equalsIgnoreCase("mysql") || TestController.getDatabase().getBrand().equalsIgnoreCase("tidb")) {
@@ -172,7 +162,6 @@ public class OltpbenchTools {
                 else {
                     element.setText("");
                 }
-
             }
             if(element.getName().equalsIgnoreCase("isolation")){
                 element.setText(this.isolation);
@@ -193,6 +182,7 @@ public class OltpbenchTools {
             if(element.getName().equalsIgnoreCase("uploadUrl")){
                 element.setText("");
             }
+
         }
         saveDocument(document, new File("tools/BenchmarkTools/oltpbench/config/" + bench + "_config.xml"));
     }

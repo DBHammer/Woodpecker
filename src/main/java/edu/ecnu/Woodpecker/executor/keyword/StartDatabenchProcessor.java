@@ -5,22 +5,20 @@ import edu.ecnu.Woodpecker.constant.SignConstant;
 import edu.ecnu.Woodpecker.executor.Executor;
 import edu.ecnu.Woodpecker.executor.GrammarType;
 import edu.ecnu.Woodpecker.log.WpLog;
-import edu.ecnu.Woodpecker.tools.NmonTools;
-import edu.ecnu.Woodpecker.tools.OltpbenchTools;
+import edu.ecnu.Woodpecker.tools.DatabenchTools;
 import edu.ecnu.Woodpecker.util.Util;
 
-import java.sql.Time;
-
 /**
- * @Author: Chen Lixiang
- * @Email: lixiang3608@outlook.com
- * @Date: 2022/1/12
+ * @author : Youshuhong
+ * @create : 2022/3/3 20:08
  */
-public class NmonProcessor extends Executor implements Keyword
-{
+public class StartDatabenchProcessor extends Executor implements Keyword{
+    public StartDatabenchProcessor(){
+
+    }
     @Override
     public void handle(String keyword, GrammarType type) throws Exception{
-        WpLog.recordLog(LogLevelConstant.INFO, "NMON: %s", keyword);
+        WpLog.recordLog(LogLevelConstant.INFO, "Start Databench: %s", keyword);
         switch (type)
         {
             case FIRST_GRAMMAR:
@@ -45,22 +43,17 @@ public class NmonProcessor extends Executor implements Keyword
 
     /**
      *
-     * @param keyword Starts with "NMON["
+     * @param keyword Starts with "InitDataProcessor["
      */
     private void handleFirstGrammar(String keyword) throws Exception {
-        String[] parts = Util.removeBlankElement(keyword.split("\\[|;|]"));
-        String host = parts[1].trim();
-        String user = parts[2].trim();
-        String interval = parts[3].trim();
-        String times = parts[4].trim();
-
-        NmonTools.execRemoteNmon(host, user, interval, times);
+        DatabenchTools databenchTools = new DatabenchTools();
+        databenchTools.startDatabench(keyword);
     }
 
     /**
      *
      * @param variableName
-     * @param keyword Starts with "NMON["
+     * @param keyword Starts with "InitDataProcessor["
      * @throws Exception
      */
     private void handleSecondGrammar(String variableName, String keyword) throws Exception
@@ -72,7 +65,7 @@ public class NmonProcessor extends Executor implements Keyword
      *
      * @param dataType The data type of variable
      * @param variableName
-     * @param keyword Starts with "NMON["
+     * @param keyword Starts with "InitDataProcessor["
      * @throws Exception
      */
     private void handleThirdGrammar(String dataType, String variableName, String keyword) throws Exception

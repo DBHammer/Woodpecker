@@ -109,253 +109,259 @@ public interface WoodpeckerParserConstants {
   /** RegularExpression Id. */
   int NMON = 54;
   /** RegularExpression Id. */
-  int BOOLEAN = 55;
+  int INIT_DATABENCH_CONFIG = 55;
   /** RegularExpression Id. */
-  int BYTE = 56;
+  int START_DATABENCH = 56;
   /** RegularExpression Id. */
-  int CHAR = 57;
+  int BOOLEAN = 57;
   /** RegularExpression Id. */
-  int DOUBLE = 58;
+  int BYTE = 58;
   /** RegularExpression Id. */
-  int FLOAT = 59;
+  int CHAR = 59;
   /** RegularExpression Id. */
-  int INT = 60;
+  int DOUBLE = 60;
   /** RegularExpression Id. */
-  int LONG = 61;
+  int FLOAT = 61;
   /** RegularExpression Id. */
-  int SHORT = 62;
+  int INT = 62;
   /** RegularExpression Id. */
-  int STRING = 63;
+  int LONG = 63;
   /** RegularExpression Id. */
-  int DECIMAL = 64;
+  int SHORT = 64;
   /** RegularExpression Id. */
-  int CONNECTION = 65;
+  int STRING = 65;
   /** RegularExpression Id. */
-  int STATEMENT = 66;
+  int DECIMAL = 66;
   /** RegularExpression Id. */
-  int PSTATEMENT = 67;
+  int CONNECTION = 67;
   /** RegularExpression Id. */
-  int CSTATEMENT = 68;
+  int STATEMENT = 68;
   /** RegularExpression Id. */
-  int LIST = 69;
+  int PSTATEMENT = 69;
   /** RegularExpression Id. */
-  int RESULTSET = 70;
+  int CSTATEMENT = 70;
   /** RegularExpression Id. */
-  int IDEALRESULTSET = 71;
+  int LIST = 71;
   /** RegularExpression Id. */
-  int PERFORMANCERESULT = 72;
+  int RESULTSET = 72;
   /** RegularExpression Id. */
-  int TIMESTAMP = 73;
+  int IDEALRESULTSET = 73;
   /** RegularExpression Id. */
-  int VARCHAR = 74;
+  int PERFORMANCERESULT = 74;
   /** RegularExpression Id. */
-  int SESSION = 75;
+  int TIMESTAMP = 75;
   /** RegularExpression Id. */
-  int MS_CATEGORY = 76;
+  int VARCHAR = 76;
   /** RegularExpression Id. */
-  int TX_OP = 77;
+  int SESSION = 77;
   /** RegularExpression Id. */
-  int TIME_UNIT = 78;
+  int MS_CATEGORY = 78;
   /** RegularExpression Id. */
-  int IP_ADDRESS = 79;
+  int TX_OP = 79;
   /** RegularExpression Id. */
-  int IS_CLUSTER_AVAILABLE = 80;
+  int TIME_UNIT = 80;
   /** RegularExpression Id. */
-  int AWAIT_AVAILABLE = 81;
+  int IP_ADDRESS = 81;
   /** RegularExpression Id. */
-  int MERGE = 82;
+  int IS_CLUSTER_AVAILABLE = 82;
   /** RegularExpression Id. */
-  int IS_MERGE_DONE = 83;
+  int AWAIT_AVAILABLE = 83;
   /** RegularExpression Id. */
-  int AWAIT_MERGE_DONE = 84;
+  int MERGE = 84;
   /** RegularExpression Id. */
-  int REELECT = 85;
+  int IS_MERGE_DONE = 85;
   /** RegularExpression Id. */
-  int EXIST_MASTER = 86;
+  int AWAIT_MERGE_DONE = 86;
   /** RegularExpression Id. */
-  int KILL_SERVER = 87;
+  int REELECT = 87;
   /** RegularExpression Id. */
-  int START_SERVER = 88;
+  int EXIST_MASTER = 88;
   /** RegularExpression Id. */
-  int ADD_SERVER = 89;
+  int KILL_SERVER = 89;
   /** RegularExpression Id. */
-  int SET_MASTER = 90;
+  int START_SERVER = 90;
   /** RegularExpression Id. */
-  int GATHER_STATISTICS = 91;
+  int ADD_SERVER = 91;
   /** RegularExpression Id. */
-  int IS_GATHER_DONE = 92;
+  int SET_MASTER = 92;
   /** RegularExpression Id. */
-  int SERVER_OPTION = 93;
+  int GATHER_STATISTICS = 93;
   /** RegularExpression Id. */
-  int PROCEDURE_PARAM_TYPE = 94;
+  int IS_GATHER_DONE = 94;
   /** RegularExpression Id. */
-  int PK = 95;
+  int SERVER_OPTION = 95;
   /** RegularExpression Id. */
-  int RESULT_HANDLE = 96;
+  int PROCEDURE_PARAM_TYPE = 96;
   /** RegularExpression Id. */
-  int EXECUTE_TYPE = 97;
+  int PK = 97;
   /** RegularExpression Id. */
-  int SET_TYPE = 98;
+  int RESULT_HANDLE = 98;
   /** RegularExpression Id. */
-  int FK = 99;
+  int EXECUTE_TYPE = 99;
   /** RegularExpression Id. */
-  int INDEX = 100;
+  int SET_TYPE = 100;
   /** RegularExpression Id. */
-  int FILTER = 101;
+  int FK = 101;
   /** RegularExpression Id. */
-  int APPEND = 102;
+  int INDEX = 102;
   /** RegularExpression Id. */
-  int DISTRIBUTION_TYPE = 103;
+  int FILTER = 103;
   /** RegularExpression Id. */
-  int OLTPBENCH_B = 104;
+  int APPEND = 104;
   /** RegularExpression Id. */
-  int OLTPBENCH_C = 105;
+  int DISTRIBUTION_TYPE = 105;
   /** RegularExpression Id. */
-  int BENCHMARK_BOOLEAN = 106;
+  int OLTPBENCH_B = 106;
   /** RegularExpression Id. */
-  int BENCHMARK_ISOLATION = 107;
+  int OLTPBENCH_C = 107;
   /** RegularExpression Id. */
-  int UNLIMITED = 108;
+  int BENCHMARK_BOOLEAN = 108;
   /** RegularExpression Id. */
-  int SYSBENCH_OPTION = 109;
+  int BENCHMARK_ISOLATION = 109;
   /** RegularExpression Id. */
-  int BENCHMARK_DATABASE = 110;
+  int UNLIMITED = 110;
   /** RegularExpression Id. */
-  int SIZE = 111;
+  int SYSBENCH_OPTION = 111;
   /** RegularExpression Id. */
-  int ON_OFF = 112;
+  int BENCHMARK_DATABASE = 112;
   /** RegularExpression Id. */
-  int TOUCHSTONE_C = 113;
+  int SIZE = 113;
   /** RegularExpression Id. */
-  int FILE_PATH = 114;
+  int ON_OFF = 114;
   /** RegularExpression Id. */
-  int INTEGER_LITERAL = 115;
+  int TOUCHSTONE_C = 115;
   /** RegularExpression Id. */
-  int DECIMAL_LITERAL = 116;
+  int FILE_PATH = 116;
   /** RegularExpression Id. */
-  int HEX_LITERAL = 117;
+  int DATABENCH_ISOLATION_LEVEL = 117;
   /** RegularExpression Id. */
-  int OCTAL_LITERAL = 118;
+  int INTEGER_LITERAL = 118;
   /** RegularExpression Id. */
-  int FLOATING_POINT_LITERAL = 119;
+  int DECIMAL_LITERAL = 119;
   /** RegularExpression Id. */
-  int EXPONENT = 120;
+  int HEX_LITERAL = 120;
   /** RegularExpression Id. */
-  int CHARACTER_LITERAL = 121;
+  int OCTAL_LITERAL = 121;
   /** RegularExpression Id. */
-  int TRUE = 122;
+  int FLOATING_POINT_LITERAL = 122;
   /** RegularExpression Id. */
-  int FALSE = 123;
+  int EXPONENT = 123;
   /** RegularExpression Id. */
-  int NULL = 124;
+  int CHARACTER_LITERAL = 124;
   /** RegularExpression Id. */
-  int CALCULATION = 125;
+  int TRUE = 125;
   /** RegularExpression Id. */
-  int LPAREN = 126;
+  int FALSE = 126;
   /** RegularExpression Id. */
-  int RPAREN = 127;
+  int NULL = 127;
   /** RegularExpression Id. */
-  int LBRACE = 128;
+  int CALCULATION = 128;
   /** RegularExpression Id. */
-  int RBRACE = 129;
+  int LPAREN = 129;
   /** RegularExpression Id. */
-  int LBRACKET = 130;
+  int RPAREN = 130;
   /** RegularExpression Id. */
-  int RBRACKET = 131;
+  int LBRACE = 131;
   /** RegularExpression Id. */
-  int SEMICOLON = 132;
+  int RBRACE = 132;
   /** RegularExpression Id. */
-  int COMMA = 133;
+  int LBRACKET = 133;
   /** RegularExpression Id. */
-  int DOT = 134;
+  int RBRACKET = 134;
   /** RegularExpression Id. */
-  int ASSIGN = 135;
+  int SEMICOLON = 135;
   /** RegularExpression Id. */
-  int GT = 136;
+  int COMMA = 136;
   /** RegularExpression Id. */
-  int LT = 137;
+  int DOT = 137;
   /** RegularExpression Id. */
-  int BANG = 138;
+  int ASSIGN = 138;
   /** RegularExpression Id. */
-  int TILDE = 139;
+  int GT = 139;
   /** RegularExpression Id. */
-  int HOOK = 140;
+  int LT = 140;
   /** RegularExpression Id. */
-  int COLON = 141;
+  int BANG = 141;
   /** RegularExpression Id. */
-  int EQ = 142;
+  int TILDE = 142;
   /** RegularExpression Id. */
-  int LE = 143;
+  int HOOK = 143;
   /** RegularExpression Id. */
-  int GE = 144;
+  int COLON = 144;
   /** RegularExpression Id. */
-  int NE = 145;
+  int EQ = 145;
   /** RegularExpression Id. */
-  int SC_OR = 146;
+  int LE = 146;
   /** RegularExpression Id. */
-  int SC_AND = 147;
+  int GE = 147;
   /** RegularExpression Id. */
-  int INCR = 148;
+  int NE = 148;
   /** RegularExpression Id. */
-  int DECR = 149;
+  int SC_OR = 149;
   /** RegularExpression Id. */
-  int PLUS = 150;
+  int SC_AND = 150;
   /** RegularExpression Id. */
-  int MINUS = 151;
+  int INCR = 151;
   /** RegularExpression Id. */
-  int STAR = 152;
+  int DECR = 152;
   /** RegularExpression Id. */
-  int SLASH = 153;
+  int PLUS = 153;
   /** RegularExpression Id. */
-  int BIT_AND = 154;
+  int MINUS = 154;
   /** RegularExpression Id. */
-  int BIT_OR = 155;
+  int STAR = 155;
   /** RegularExpression Id. */
-  int XOR = 156;
+  int SLASH = 156;
   /** RegularExpression Id. */
-  int REM = 157;
+  int BIT_AND = 157;
   /** RegularExpression Id. */
-  int LSHIFT = 158;
+  int BIT_OR = 158;
   /** RegularExpression Id. */
-  int RSIGNEDSHIFT = 159;
+  int XOR = 159;
   /** RegularExpression Id. */
-  int RUNSIGNEDSHIFT = 160;
+  int REM = 160;
   /** RegularExpression Id. */
-  int PLUSASSIGN = 161;
+  int LSHIFT = 161;
   /** RegularExpression Id. */
-  int MINUSASSIGN = 162;
+  int RSIGNEDSHIFT = 162;
   /** RegularExpression Id. */
-  int STARASSIGN = 163;
+  int RUNSIGNEDSHIFT = 163;
   /** RegularExpression Id. */
-  int SLASHASSIGN = 164;
+  int PLUSASSIGN = 164;
   /** RegularExpression Id. */
-  int ANDASSIGN = 165;
+  int MINUSASSIGN = 165;
   /** RegularExpression Id. */
-  int ORASSIGN = 166;
+  int STARASSIGN = 166;
   /** RegularExpression Id. */
-  int XORASSIGN = 167;
+  int SLASHASSIGN = 167;
   /** RegularExpression Id. */
-  int REMASSIGN = 168;
+  int ANDASSIGN = 168;
   /** RegularExpression Id. */
-  int LSHIFTASSIGN = 169;
+  int ORASSIGN = 169;
   /** RegularExpression Id. */
-  int RSIGNEDSHIFTASSIGN = 170;
+  int XORASSIGN = 170;
   /** RegularExpression Id. */
-  int RUNSIGNEDSHIFTASSIGN = 171;
+  int REMASSIGN = 171;
   /** RegularExpression Id. */
-  int LIKE = 172;
+  int LSHIFTASSIGN = 172;
   /** RegularExpression Id. */
-  int CONTAINS = 173;
+  int RSIGNEDSHIFTASSIGN = 173;
   /** RegularExpression Id. */
-  int ALL_ARE = 174;
+  int RUNSIGNEDSHIFTASSIGN = 174;
   /** RegularExpression Id. */
-  int IDENTIFIER = 175;
+  int LIKE = 175;
   /** RegularExpression Id. */
-  int LETTER = 176;
+  int CONTAINS = 176;
   /** RegularExpression Id. */
-  int PART_LETTER = 177;
+  int ALL_ARE = 177;
   /** RegularExpression Id. */
-  int STRING_LITERAL = 178;
+  int IDENTIFIER = 178;
+  /** RegularExpression Id. */
+  int LETTER = 179;
+  /** RegularExpression Id. */
+  int PART_LETTER = 180;
+  /** RegularExpression Id. */
+  int STRING_LITERAL = 181;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -417,6 +423,8 @@ public interface WoodpeckerParserConstants {
     "\"BATCH_SQL\"",
     "\"END_BATCH_SQL\"",
     "\"NMON\"",
+    "\"INIT_DATABENCH_CONFIG\"",
+    "\"START_DATABENCH\"",
     "\"boolean\"",
     "\"byte\"",
     "\"char\"",
@@ -477,6 +485,7 @@ public interface WoodpeckerParserConstants {
     "<ON_OFF>",
     "\"conf/touchstone.conf\"",
     "<FILE_PATH>",
+    "<DATABENCH_ISOLATION_LEVEL>",
     "<INTEGER_LITERAL>",
     "<DECIMAL_LITERAL>",
     "<HEX_LITERAL>",

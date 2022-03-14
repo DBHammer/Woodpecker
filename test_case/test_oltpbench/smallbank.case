@@ -1,1 +1,1 @@
-OLTPBENCH[smallbank;TRANSACTION_REPEATABLE_READ;1;10;200;10000;True;True;True;5;smallbankoutput;1];
+OLTPBENCH[smallbank;TRANSACTION_REPEATABLE_READ;1;8;10;200;10000;True;True;True;5;smallbankoutput;1];

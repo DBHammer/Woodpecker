@@ -1,6 +1,8 @@
 package edu.ecnu.Woodpecker.tools;
 
+import edu.ecnu.Woodpecker.constant.LogLevelConstant;
 import edu.ecnu.Woodpecker.controller.TestController;
+import edu.ecnu.Woodpecker.log.WpLog;
 import edu.ecnu.Woodpecker.util.Util;
 
 import java.util.ArrayList;
@@ -16,7 +18,7 @@ public class NmonTools {
 
     private static final int connectionPort = 22;
 
-    private static final String remoteFileName = "/tmp/nmon";
+    private static final String remoteFileName = "/home/ysh/nmon";
 
     private static List<String> hosts;
 
@@ -26,8 +28,10 @@ public class NmonTools {
             hosts = new ArrayList<>();
         }
         String cmd = "nmon -s " + interval + " -c " + times + " -F " + remoteFileName;
-        Util.exec(host, user, connectionPort, cmd);
+        WpLog.recordLog(LogLevelConstant.INFO, "开始执行nmon命令：" + cmd);
+        String result = Util.exec(host, user, connectionPort, cmd);
         hosts.add(host + "&" + user);
+        WpLog.recordLog(LogLevelConstant.INFO, "result：" + result);
     }
 
     public static void generateFiles()

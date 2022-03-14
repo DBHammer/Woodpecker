@@ -62,6 +62,9 @@ public class KeywordConstant
     public static final String TPCH = "tpch";
     public static final String NMON = "nmon";
 
+    public static final String INIT_DATABENCH_CONFIG = "init_databench_config";
+    public static final String START_DATABENCH = "start_databench";
+
 
     // All keyword class must locate in this directory
     public static final String CLASS_PREFIX = "edu.ecnu.Woodpecker.executor.keyword";
@@ -125,7 +128,8 @@ public class KeywordConstant
         keywordClassMap.put(TPCH, CLASS_PREFIX + SignConstant.DOT_CHAR + "TpcHProcessor");
         keywordClassMap.put(NMON, CLASS_PREFIX + SignConstant.DOT_CHAR + "NmonProcessor");
 
-
+        keywordClassMap.put(INIT_DATABENCH_CONFIG, CLASS_PREFIX + SignConstant.DOT_CHAR + "InitConfigProcessor");
+        keywordClassMap.put(START_DATABENCH, CLASS_PREFIX + SignConstant.DOT_CHAR + "StartDatabenchProcessor");
 
     }
 }
