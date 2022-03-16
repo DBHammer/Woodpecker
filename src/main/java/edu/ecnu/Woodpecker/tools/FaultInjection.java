@@ -31,8 +31,9 @@ public class FaultInjection {
         String dst = "/tmp/seizeCPU.sh";
         Util.put(ip, user, connectionPort, src, dst);
 
-        String cmd = "sh " + dst + " " + cores + " " + time;
-        Util.exec(ip, user, connectionPort, cmd);
+        String cmd = "bash " + dst + " " + cores + " " + time;
+        String result = Util.exec(ip, user, connectionPort, cmd);
+        WpLog.recordLog(LogLevelConstant.INFO, "CPU RESULT: "+result);
     }
     public void seizeMEM(String keyword)
     {
@@ -47,7 +48,8 @@ public class FaultInjection {
         Util.put(ip, user, connectionPort, src, dst);
 
         String cmd = dst + " " + time + " " + size;
-        Util.exec(ip, user, connectionPort, cmd);
+        String result = Util.exec(ip, user, connectionPort, cmd);
+        WpLog.recordLog(LogLevelConstant.INFO, "MEM RESULT: "+result);
     }
     public void seizeDISK(String keyword)
     {
@@ -62,8 +64,10 @@ public class FaultInjection {
         String dst = "/tmp/seizeDISK.sh";
         Util.put(ip, user, connectionPort, src, dst);
 
-        String cmd = "sh " + dst + " " + IOPS +" " + size + " " + time;
-        Util.exec(ip, user, connectionPort, cmd);
+        String cmd = "bash " + dst + " " + IOPS +" " + size + " " + time;
+        String result = Util.exec(ip, user, connectionPort, cmd);
+        WpLog.recordLog(LogLevelConstant.INFO, "DISK RESULT: "+result);
+
     }
     public void seizeNET(String keyword)
     {
@@ -87,8 +91,12 @@ public class FaultInjection {
         int port = 1234;
         String transmitcmd = "java -jar " + transmitdst + " " + receiveIP + " " + port + " " + IOPS + " " + size + " " + time;
         String receivecmd = "java -jar " + receivedst + " " + port + " " + (time + 5);
-        Util.exec(receiveIP, user2, connectionPort, transmitcmd);
-        Util.exec(transmitIP, user1, connectionPort, receivecmd);
+
+        String transmit_result = Util.exec(receiveIP, user2, connectionPort, transmitcmd);
+        WpLog.recordLog(LogLevelConstant.INFO, "NET TRANSMIT RESULT: "+transmit_result);
+        String receive_result =Util.exec(transmitIP, user1, connectionPort, receivecmd);
+        WpLog.recordLog(LogLevelConstant.INFO, "NET RECEIVE RESULT: "+receive_result);
+
     }
 
     public void seizeFILE(String keyword) throws IOException {
@@ -101,8 +109,10 @@ public class FaultInjection {
         String dst = "/tmp/seizeFILE.sh";
 
         Util.put(ip, user, connectionPort, src, dst);
-        String cmd = "sh " + dst + " " + path;
+        String cmd = "bash " + dst + " " + path;
 
-        WpLog.recordLog(LogLevelConstant.INFO, Util.exec(ip, user, connectionPort, cmd));
+        String result = Util.exec(ip, user, connectionPort, cmd);
+        WpLog.recordLog(LogLevelConstant.INFO, "FILE RESULT: "+result);
+
     }
 }

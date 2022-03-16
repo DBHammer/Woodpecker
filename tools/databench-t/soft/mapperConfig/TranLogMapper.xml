@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mapper.TranLogMapper">
+	<!-- 插入历史日志表tranlog_history，防止tranlog表过大 -->
+    <insert id="insertTranlogHistory">
+	    insert into tranlog_history select * from tranlog where tranlog_strtime &lt; #{tranlog_strtime} limit #{num_count}
+    </insert>
+    <!-- 插入历史日志表tranlog_history时删除tranlog,防止tranlog表过大 -->
+    <insert id="deleteTranlog">
+	    delete from tranlog where tranlog_strtime &lt; #{tranlog_strtime} limit #{num_count}
+    </insert>
+</mapper>

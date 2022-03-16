@@ -32,7 +32,7 @@ public class DatabenchTools {
     private List<String> config;
 
     public DatabenchTools() {
-        this.configPath = "tools/databench/soft/application.properties";
+        this.configPath = "tools/databench-t/soft/application.properties";
         this.config = new ArrayList<>();
 
         if (TestController.getDatabase().getBrand().equalsIgnoreCase("mysql") || TestController.getDatabase().getBrand().equalsIgnoreCase("tidb")) {
@@ -74,30 +74,31 @@ public class DatabenchTools {
         String isolation_level = parts[3];
         Integer round = Integer.parseInt(parts[4]);
 
+        String path = System.getProperty("user.dir");//source需要绝对路径，所以先获取当前路径
         String create_businessdb = "mysql -h" + this.IP + " -u" + this.user + " -p" + this.password
-                + " --execute=\"source /Users/irisyou/Woodpecker/tools/databench/sql/mysql/businesstest_database.sql;\"";
+                + " --execute=\"source " + path + "/tools/databench-t/sql/mysql/businesstest_database.sql;\"";
         WpLog.recordLog(LogLevelConstant.INFO, "开始导入businesstest_database.sql： " + create_businessdb);
         exec(create_businessdb);
 
         String create_localdb = "mysql -h" + this.IP + " -u" + this.user + " -p" + this.password
-                + " --execute=\"source /Users/irisyou/Woodpecker/tools/databench/sql/mysql/local_database.sql;\"";
+                + " --execute=\"source " + path+ "/tools/databench-t/sql/mysql/local_database.sql;\"";
         WpLog.recordLog(LogLevelConstant.INFO, "开始导入local_database.sql： " + create_localdb);
         exec(create_localdb);
 
 
-        String init_data_cmd = "cd tools/databench/soft && java -Dfile.encoding=utf-8 -jar ftdb.jar init ";
-        init_data_cmd += datacfg_id + " --spring.config.location =" + this.configPath.substring(0, this.configPath.lastIndexOf(".")) + "-new.properties";
+        String init_data_cmd = "cd tools/databench-t/soft && java -Dfile.encoding=utf-8 -jar ftdb.jar init ";
+        init_data_cmd += datacfg_id + " --spring.config.location =" + this.configPath;
         ;
         WpLog.recordLog(LogLevelConstant.INFO, "导入数据： " + init_data_cmd);
         String init_repo = exec(init_data_cmd).toString();
 
 
         for (int i = 0; i < round; i++) {
-            String cmd = "cd tools/databench/soft && java -Dfile.encoding=utf-8 -jar ftdb.jar test " + datacfg_id + " " +
-                    trancfg_id + " " + isolation_level.trim() + " --spring.config.location =" + this.configPath.substring(0, this.configPath.lastIndexOf(".")) + "-new.properties";
-            WpLog.recordLog(LogLevelConstant.INFO, "开始执行databench");
-            WpLog.recordLog(LogLevelConstant.INFO, "databench命令: " + cmd);
-            TestController.reportGenerator.appendNewBenchmark("DATABENCH 测试报告", "");
+            String cmd = "cd tools/databench-t/soft && java -Dfile.encoding=utf-8 -jar ftdb.jar test " + datacfg_id + " " +
+                    trancfg_id + " " + isolation_level.trim() + " --spring.config.location =" + this.configPath;
+            WpLog.recordLog(LogLevelConstant.INFO, "开始执行databench-t");
+            WpLog.recordLog(LogLevelConstant.INFO, "databench-t命令: " + cmd);
+            TestController.reportGenerator.appendNewBenchmark("DATABENCH-T 测试报告", "");
 
             String result = exec(cmd).toString();
 
@@ -123,7 +124,7 @@ public class DatabenchTools {
             if (line.contains("driverClassName")) {
                 line = line.split("=")[0] + "=" + this.driver;
             } else if (line.contains("url")) {
-                String originConn = line.split("=")[1];
+                String originConn = line.split("url=")[1];
                 String[] parts = originConn.split("//");
                 String[] p2 = parts[1].split(":");
                 String[] p3 = p2[1].split("/");
@@ -154,10 +155,8 @@ public class DatabenchTools {
     }
 
     private void setConfig() {
-
-        String newPath = this.configPath.substring(0, this.configPath.lastIndexOf(".")) + "-new.properties";
-        System.out.println("开始重写配置文件" + newPath);
-        File file = new File(newPath);
+        System.out.println("开始重写配置文件" + this.configPath);
+        File file = new File(this.configPath);
         file.delete();
         try {
             file.createNewFile();

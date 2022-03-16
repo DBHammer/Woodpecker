@@ -96,10 +96,10 @@ public class TpcHTools {
         String driver = null;
         if (TestController.getDatabase().getBrand().equalsIgnoreCase("mysql")
         || TestController.getDatabase().getBrand().equalsIgnoreCase("tidb")) {
-            url = "jdbc:mysql://" + host + ":" + port + "/tpch_test?useSSL=false";
+            url = "jdbc:mysql://" + host + ":" + port + "/TPCH_TEST?useSSL=false";
             driver = "com.mysql.jdbc.Driver";
         } else if (TestController.getDatabase().getBrand().equalsIgnoreCase("postgresql")) {
-            url = "jdbc:postgresql://" + host + ":" + port + "/tpch_test";
+            url = "jdbc:postgresql://" + host + ":" + port + "/TPCH_TEST";
             driver = "org.postgresql.Driver";
         }
 

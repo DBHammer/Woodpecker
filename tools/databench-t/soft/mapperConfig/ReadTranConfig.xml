@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mapper.ReadTranConfig">
+	<!-- 根据条件获取运行配置信息 -->
+    <select id="readTranConfig" parameterType="com.pojo.Trancfg" resultType="com.pojo.Trancfg">
+        select trancfg_testid,trancfg_id,trancfg_name,trancfg_procnum,
+               trancfg_runnum,trancfg_trannum,trancfg_brkpot,trancfg_brktime
+        from trancfg where 1 = 1
+        <if test="trancfg_testid != null and trancfg_testid !=''">
+        	and trancfg_testid = #{trancfg_testid}
+        </if> 
+        <if test="trancfg_id != null and trancfg_id !=''">
+        	and trancfg_id = #{trancfg_id}
+        </if> 
+    </select>
+</mapper>

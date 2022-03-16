@@ -57,7 +57,7 @@ public class Util
         try
         {
             JSch jsch = new JSch();
-            jsch.addIdentity("../.ssh/id_rsa");
+            jsch.addIdentity("~/.ssh/id_rsa");
             session = jsch.getSession(user, host, port);
             Properties config = new Properties();
             config.put("StrictHostKeyChecking", "no");
@@ -70,7 +70,7 @@ public class Util
             openChannel.setCommand(command);
             openChannel.connect();
             InputStream in = openChannel.getInputStream();
-
+            WpLog.recordLog(LogLevelConstant.INFO, "运行命令: "+command);
             BufferedReader reader = new BufferedReader(new InputStreamReader(in));
             String buf = null;
             while ((buf = reader.readLine()) != null)
@@ -145,7 +145,7 @@ public class Util
         try
         {
             JSch jsch = new JSch();
-            jsch.addIdentity("../.ssh/id_rsa","");
+            jsch.addIdentity("~/.ssh/id_rsa","");
             session = jsch.getSession(user, host, port);
             Properties config = new Properties();
             config.put("StrictHostKeyChecking", "no");
@@ -186,7 +186,7 @@ public class Util
         try
         {
             JSch jsch = new JSch();
-            jsch.addIdentity("../.ssh/id_rsa","");
+            jsch.addIdentity("~/.ssh/id_rsa","");
             session = jsch.getSession(user, host, port);
             Properties config = new Properties();
             config.put("StrictHostKeyChecking", "no");

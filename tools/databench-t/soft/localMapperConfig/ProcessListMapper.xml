@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.localMapper.ProcessListMapper">
+	<!-- 获取最新进度记录 -->
+    <select id="getProcessStatus" resultType="com.pojo.ProcessList" parameterType="java.lang.String">
+		select * from processlist where process_id = #{param1} order by process_time desc,process_perc desc limit 1
+    </select>
+    <!-- 插入进度记录 -->
+   <insert id="insertProcessList" parameterType="com.pojo.ProcessList">
+        insert into processlist (process_id,datacfg_id,trancfg_id,
+        process_content,process_perc,process_type,process_time)
+        values (#{process_id},#{datacfg_id},#{trancfg_id},#{process_content},#{process_perc},
+        #{process_type},#{process_time})
+    </insert>
+    <!-- 获取业务运行完成进度最后记录 -->
+     <select id="getProcessList" resultType="com.pojo.ProcessList">
+		select * from processlist where process_perc=100 and process_type = '2' order by process_time desc
+    </select>
+</mapper>

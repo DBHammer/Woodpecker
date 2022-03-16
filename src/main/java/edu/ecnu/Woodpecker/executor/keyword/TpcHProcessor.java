@@ -49,10 +49,9 @@ public class TpcHProcessor extends Executor implements Keyword {
         Integer round = Integer.parseInt(parts[2]);
         String dbSize = parts[1];
         TpcHTools tpcHTools = new TpcHTools();
-
+        tpcHTools.dbGen(dbSize);
+        tpcHTools.loadData();
         for (int i = 0; i < round; i++) {
-            tpcHTools.dbGen(dbSize);
-            tpcHTools.loadData();
             tpcHTools.executeQueries();
         }
     }
