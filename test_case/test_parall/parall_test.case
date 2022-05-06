@@ -1,20 +1,17 @@
-
+##获取数据库连接
 Connection conn=GET_CONN[master];
+##在已获取的conn上定义一个sql执行器
 Statement stat=GET_STAT[conn];
-
-
+##执行sql，创建数据表
 SQL["drop table if exists t1;";stat];
-
-
 SQL["create table t1(k int primary key, c2 int);";stat];
-
+##并行执行sql
 PARALL;
 SQL["insert into t1 values (1,1);";stat];
 SQL["insert into t1 values (2,1);";stat];
 MID_PARALL;
 SQL["insert into t1 values (3,1);";stat];
 SQL["insert into t1 values (4,1);";stat];
-
 MID_PARALL;
 SQL["insert into t1 values (5,1);";stat];
 SQL["insert into t1 values (6,1);";stat];
@@ -25,11 +22,11 @@ MID_PARALL;
 SQL["insert into t1 values (9,1);";stat];
 SQL["insert into t1 values (10,1);";stat];
 END_PARALL;
-
+##获取运行结果集
 ResultSet rs0 = SQL["select * from t1;";stat];
-
+##指定理想结果集
 IdealResultSet<int,int> irs0;
-
+##导入该理想结果集
 IMPORT_IRS["parall_test";irs0 0];
-
+##比较数据库运行结果集与理想结果集
 VERIFY[rs0;==;irs0];

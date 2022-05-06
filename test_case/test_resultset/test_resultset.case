@@ -1,0 +1,10 @@
+Connection conn=GET_CONN[master];
+Statement stat=GET_STAT[conn];
+
+ResultSet rs0 = SQL["SELECT CASE 'B' WHEN 'A' THEN 1 WHEN 'B' THEN 2 END,CASE CONCAT('A','B') WHEN CONCAT('AB','') THEN 'A' WHEN 'B' THEN 'B' END,CASE WHEN 1>0 THEN 'TRUE' ELSE 'FALSE' END;";stat];
+
+IdealResultSet<int,String,String> irs0;
+
+IMPORT_IRS["test_resultset";irs0 0];
+
+VERIFY[rs0;==;irs0];

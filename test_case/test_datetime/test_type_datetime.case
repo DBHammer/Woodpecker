@@ -1,0 +1,22 @@
+
+Connection conn = GET_CONN[master];
+
+Statement stmt = GET_STAT[conn];
+
+PStatement pstmt1 = GET_PSTAT[conn; "insert into test_type_datetime (c1, c2, c3, c4) values (?,?,?,?)";String,Timestamp,Timestamp,String];
+
+SQL["drop table if exists test_type_datetime"; stmt];
+SQL["create table test_type_datetime (c1 date,c2 datetime,c3 datetime,c4 time)"; stmt];
+
+PSQL[pstmt1; "9999-12-31", "9999-12-31 23:59:59", "2038-01-19 03:14:07", "23:59:59"];
+PSQL[pstmt1; "1000-01-01", "1000-01-01 00:00:00", "1970-01-02 00:00:01", "00:59:59"];
+
+ResultSet rs0 = SQL["select * from test_type_datetime;"; stmt];
+##指定理想结果集
+IdealResultSet<String,Timestamp,Timestamp,String> irs0;
+##导入该理想结果集
+IMPORT_IRS["test_type_datetime"; irs0 0];
+##比较数据库运行结果集与理想结果集
+VERIFY[rs0;==;irs0];
+##删除表
+SQL["drop table if exists test_type_datetime"; stmt];

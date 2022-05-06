@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -531,7 +532,9 @@ public class BasicSQLOperation {
                     pstmt.setBoolean(i + 1, Boolean.parseBoolean(objects[i].toString()));
                     break;
                 case TIMESTAMP:
-                    pstmt.setTimestamp(i + 1, Timestamp.valueOf(objects[i].toString()));
+                    java.util.Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(objects[i].toString());
+                    String timeStr = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
+                    pstmt.setTimestamp(i + 1, Timestamp.valueOf(timeStr));
                     break;
                 default:
                     WpLog.recordLog(LogLevelConstant.ERROR, "Unsupported data type: %s", dataTypes[i]);

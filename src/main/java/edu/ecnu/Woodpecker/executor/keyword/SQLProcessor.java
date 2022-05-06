@@ -375,7 +375,7 @@ public class SQLProcessor extends Executor implements Keyword
     {
         String sqlType = sql.substring(sql.indexOf("\"") + 1, sql.indexOf(" "));
         int sqlOperator = 0;
-        if (sqlType.contains("select"))
+        if (sqlType.contains("select") || sqlType.contains("SELECT"))
         {
             if (parts[parts.length - 1].equals("ERROR") || parts[parts.length - 2].equals("ERROR")){
                 sqlOperator = -1;
@@ -385,7 +385,7 @@ public class SQLProcessor extends Executor implements Keyword
             }
             return sqlOperator;
         }
-        else if (sqlType.contains("explain"))
+        else if (sqlType.contains("explain") || sqlType.contains("EXPLAIN"))
         {
             if (parts[parts.length - 1].equals("ERROR") || parts[parts.length - 2].equals("ERROR")){
                 sqlOperator = -3;

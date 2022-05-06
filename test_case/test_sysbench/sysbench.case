@@ -1,12 +1,11 @@
-Session session = START_BENCHMARK[172.25.72.230;22;ysh];
-SYSBENCH_OLTP[session;prepare;mysql;oltp_read_write;sysbench;172.25.72.230;3306;root;123456;2;5000;10;0;30;5;;1];
-SYSBENCH_OLTP[session;run;mysql;oltp_read_write;sysbench;172.25.72.230;3306;root;123456;2;5000;10;0;30;5;;1];
-SYSBENCH_OLTP[session;cleanup;mysql;oltp_read_write;sysbench;172.25.72.230;3306;root;123456;2;5000;10;0;20;10;;1];
+Session session = START_BENCHMARK[219.228.147.93;22;ysh];
+SYSBENCH_OLTP[session;prepare;mysql;oltp_read_write;sysbench;219.228.147.93;3306;root;123456;2;5000;10;0;60;5;;1];
+SYSBENCH_OLTP[session;run;mysql;oltp_read_write;sysbench;219.228.147.93;3306;root;123456;2;5000;10;0;60;5;;1];
+SYSBENCH_OLTP[session;cleanup;mysql;oltp_read_write;sysbench;219.228.147.93;3306;root;123456;2;5000;10;0;60;5;;1];
 
-SYSBENCH_CPU[session;20;20;5;0;cpuoutput;1];
-SYSBENCH_IO[session;100;1M;1G;seqwr;sync;128;0;off;on;fsync;0;1.5;2;5;0;iooutput;1];
-SYSBENCH_MEM[session;1K;10G;global;off;read;seq;2;5;0;memoutput;1];
-SYSBENCH_THREADS[session;100;6;2;5;0;thdsoutput;1];
-SYSBENCH_MUTEX[session;4096;5000;10000;2;5;0;mutexoutput;1];
-
+SYSBENCH_CPU[session;200;20;10;0;;1];
+SYSBENCH_IO[session;100;1M;1G;seqwr;sync;128;0;off;on;fsync;0;1.5;2;10;0;;1];
+SYSBENCH_MEM[session;1K;10G;global;off;read;seq;2;10;0;;1];
+SYSBENCH_THREADS[session;100;6;2;10;0;;1];
+SYSBENCH_MUTEX[session;4096;5000;10000;2;10;0;;1];
 END_BENCHMARK[session];

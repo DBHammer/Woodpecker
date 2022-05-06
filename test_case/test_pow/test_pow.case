@@ -1,0 +1,14 @@
+Connection conn=GET_CONN[master];
+Statement stat=GET_STAT[conn];
+
+SQL["drop table if exists test_function_pow;";stat];
+SQL["create table test_function_pow(c1 float,c2 float,c3 float,c4 float,c5 float,c6 float,c7 float,c8 float,c9 float);";stat];
+SQL["insert into test_function_pow (c1,c2,c3,c4,c5,c6,c7,c8,c9) SELECT POW(2, 0),POW(2, 2),POW(2, 4),POW(2.5, 2),POW(2, -2),POW(2, -4),POW(2, NULL),POW(NULL, 2),POW(NULL, NULL);";stat];
+
+ResultSet rs0 = SQL["SELECT * from test_function_pow;";stat];
+
+IdealResultSet<float,float,float,float,float,float,float,float,float> irs0;
+
+IMPORT_IRS["test_pow";irs0 0];
+
+VERIFY[rs0;==;irs0];

@@ -268,7 +268,7 @@ TOKEN:
 |   <SIZE : (["0"-"9"])+["K","M","G"] >
 |   <ON_OFF : "on" | "off" >
 |   <TOUCHSTONE_C : "conf/touchstone.conf">
-|   <FILE_PATH : ("/") + (["0"-"9","a"-"z","A"-"Z","/"]) + (".")?(["a"-"z","A"-"Z","/"]) + ("/")? >
+|   <FILE_PATH : ("/") + (["0"-"9","a"-"z","A"-"Z","/",".","_"]) + (".")?(["a"-"z","A"-"Z","/",".","_"]) + ("/")? >
 |   <DATABENCH_ISOLATION_LEVEL : "RR" |"RC" >
 }
 
@@ -2813,7 +2813,7 @@ void sysbench_oltp() throws Exception :
         pwLine.append(";");
         pwLine.append(database_type.toString());
     }
-    <SEMICOLON> test=<IDENTIFIER>
+    <SEMICOLON> (test=<FILE_PATH> | test=<IDENTIFIER>)
     {
         pwLine.append(";");
         pwLine.append(test.toString());
@@ -2847,16 +2847,25 @@ void sysbench_oltp() throws Exception :
         pwLine.append(password.toString());
     }
     )?
-    <SEMICOLON> tables=<INTEGER_LITERAL>
+    <SEMICOLON>
+        {
+            pwLine.append(";");
+        }
+   (  tables=<INTEGER_LITERAL>
     {
-        pwLine.append(";");
+
         pwLine.append(tables.toString());
     }
-    <SEMICOLON> table_size=<INTEGER_LITERAL>
+    )?
+    <SEMICOLON>
+            {
+                pwLine.append(";");
+            }
+    ( table_size=<INTEGER_LITERAL>
     {
-        pwLine.append(";");
         pwLine.append(table_size.toString());
     }
+    )?
     <SEMICOLON> threads=<INTEGER_LITERAL>
     {
         pwLine.append(";");

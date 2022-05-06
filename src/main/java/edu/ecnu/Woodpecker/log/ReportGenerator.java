@@ -60,7 +60,7 @@ public class ReportGenerator {
         final Parser PARSER = Parser.builder(myOptions).build();
         final HtmlRenderer RENDERER = HtmlRenderer.builder(myOptions).build();
 
-        Node document = PARSER.parse("# Benchmark Platform 测试报告\n"
+        Node document = PARSER.parse("# Woodpecker 测试报告\n"
                 + "## 整体测试信息概览\n"
                 + generalInfoBuilder.toString()
                 + (benchmarkInfoBuilder.length() == 0 ? "" : ("## 第三方工具测试报告\n" + benchmarkInfoBuilder.toString())));
