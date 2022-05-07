@@ -93,6 +93,69 @@ public class Util
         return result.toString();
     }
 
+    public static String execInHosts(String host1, String user1, String host2, String user2, int port, String command1,String command2 ){
+        StringBuilder result = new StringBuilder();
+        Session session1 = null;
+        Session session2 = null;
+        ChannelExec openChannel1 = null;
+        ChannelExec openChannel2 = null;
+        try
+        {
+            JSch jsch = new JSch();
+            jsch.addIdentity("~/.ssh/id_rsa");
+            session1 = jsch.getSession(user1, host1, port);
+            Properties config = new Properties();
+            config.put("StrictHostKeyChecking", "no");
+            session1.setConfig(config);
+            int timeout = 60000000;
+            session1.setTimeout(timeout);
+            session1.connect();
+
+            jsch.addIdentity("~/.ssh/id_rsa");
+            session2 = jsch.getSession(user2, host2, port);
+            Properties config2 = new Properties();
+            config.put("StrictHostKeyChecking", "no");
+            session2.setConfig(config);
+            int timeout2 = 60000000;
+            session2.setTimeout(timeout);
+            session2.connect();
+
+            openChannel1 = (ChannelExec) session1.openChannel("exec");
+            openChannel1.setCommand(command1);
+            openChannel1.connect();
+            InputStream in1 = openChannel1.getInputStream();
+            WpLog.recordLog(LogLevelConstant.INFO, "运行命令: "+command1);
+
+            openChannel2 = (ChannelExec) session2.openChannel("exec");
+            openChannel2.setCommand(command2);
+            openChannel2.connect();
+            InputStream in2 = openChannel2.getInputStream();
+            WpLog.recordLog(LogLevelConstant.INFO, "运行命令: "+command2);
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in1));
+            String buf = null;
+            while ((buf = reader.readLine()) != null)
+            {
+                result.append(new String(buf.getBytes("gbk"), FileConstant.UTF_8)).append(FileConstant.LINUX_LINE_FEED);
+            }
+            reader.close();
+        }
+        catch (JSchException | IOException e)
+        {
+            result.append(WpLog.getExceptionInfo(e));
+        }
+        finally
+        {
+            if (openChannel1 != null && !openChannel1.isClosed() && openChannel2 != null && !openChannel2.isClosed())
+                openChannel1.disconnect();
+                openChannel2.disconnect();
+            if (session1 != null && session1.isConnected() && session2 != null && session2.isConnected())
+                session1.disconnect();
+                session2.disconnect();
+        }
+        return result.toString();
+    }
+
     public static String execCmd(Session session, String command) {
         StringBuilder result = new StringBuilder();
         BufferedReader reader = null;

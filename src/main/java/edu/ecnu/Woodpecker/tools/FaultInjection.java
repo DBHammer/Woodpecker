@@ -44,10 +44,13 @@ public class FaultInjection {
         Integer time = Integer.parseInt(parts[4]);
 
         String src = "tools/FaultInjection/seizeMEM";
-        String dst = "/tmp/seizeMEM";
+        String dst = "/tmp/seizeMEM.c";
+        String exe_file = "seizeMEM";
         Util.put(ip, user, connectionPort, src, dst);
 
-        String cmd = dst + " " + time + " " + size;
+        String cmd = "cd " + dst.substring(0,dst.lastIndexOf("/"))
+                + " && ./" + exe_file
+                + " " + time + " " + size;
         String result = Util.exec(ip, user, connectionPort, cmd);
         WpLog.recordLog(LogLevelConstant.INFO, "MEM RESULT: "+result);
     }
@@ -92,10 +95,10 @@ public class FaultInjection {
         String transmitcmd = "java -jar " + transmitdst + " " + receiveIP + " " + port + " " + IOPS + " " + size + " " + time;
         String receivecmd = "java -jar " + receivedst + " " + port + " " + (time + 5);
 
-        String transmit_result = Util.exec(receiveIP, user2, connectionPort, transmitcmd);
-        WpLog.recordLog(LogLevelConstant.INFO, "NET TRANSMIT RESULT: "+transmit_result);
-        String receive_result =Util.exec(transmitIP, user1, connectionPort, receivecmd);
-        WpLog.recordLog(LogLevelConstant.INFO, "NET RECEIVE RESULT: "+receive_result);
+       // Util.exec(receiveIP, user2, connectionPort, transmitcmd);
+        Util.execInHosts(transmitIP, user1, receiveIP, user2, connectionPort, transmitcmd, receivecmd);
+
+
 
     }
 
