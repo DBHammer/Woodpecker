@@ -1,0 +1,6 @@
+Session session = START_BENCHMARK[219.228.147.93;22;ysh];
+SYSBENCH_OLTP[session;prepare;mysql;oltp_read_write;sysbench;219.228.147.93;3306;root;123456;3;5000;8;0;60;5;;1];
+SYSBENCH_OLTP[session;run;mysql;oltp_read_write;sysbench;219.228.147.93;3306;root;123456;3;5000;8;0;60;5;;2];
+SYSBENCH_OLTP[session;cleanup;mysql;oltp_read_write;sysbench;219.228.147.93;3306;root;123456;3;5000;8;0;60;5;;1];
+
+

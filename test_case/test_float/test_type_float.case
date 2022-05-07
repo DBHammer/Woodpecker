@@ -6,10 +6,9 @@ Statement stmt = GET_STAT[conn];
 PStatement pstmt1 = GET_PSTAT[conn; "insert into test_type_float (c1, c2, c3, c4)values (?,?,?,?);";Decimal,Decimal,double,double];
 ##创建表，添加数据
 SQL["drop table if exists test_type_float"; stmt];
-SQL["create table test_type_float (c1 decimal(65, 30),c2 numeric(65, 30),c3 float,c4 double);"; stmt];
+SQL["create table test_type_float (c1 decimal(10, 5),c2 numeric(15, 10),c3 float,c4 double);"; stmt];
 ##执行预编译SQL
-PSQL[pstmt1; -99999999999999999999999999999999999.999999999999999999999999999999, -99999999999999999999999999999999999.999999999999999999999999999999, -3.402823466E+38, -1.7976931348623157E+308];
-PSQL[pstmt1; 99999999999999999999999999999999999.999999999999999999999999999999, 99999999999999999999999999999999999.999999999999999999999999999999, 3.402823466E+38, 1.7976931348623157E+308];
+PSQL[pstmt1; -99999.99999, -99999.9999999999, -3.4028E+38, -1.7976E+308];
 PSQL[pstmt1; 0, 0, 0, 0];
 ##获取运行结果集
 ResultSet rs0 = SQL["select * from test_type_float"; stmt];

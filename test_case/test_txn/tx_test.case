@@ -12,21 +12,17 @@ SQL["insert into t1 values (1, 10, 'aaaaa'), (2, 10, 'bbbbb'), (3, 10, 'ccccc')"
 TX[conn1; start];
 PSQL[pstmt1; 1.5, 1];
 TX[conn2; start];
-ResultSet rs1 = SQL["select c2 from t1 where c1 = 1"; stmt2];
 PSQL[pstmt2; 3.5, 2];
-ResultSet rs2 = SQL["select c2 from t1 where c1 = 2"; stmt1];
 TX[conn1; commit];
 TX[conn2; rollback];
-ResultSet rs3 = SQL["select c2 from t1 where c1 = 1"; stmt2];
-ResultSet rs4 = SQL["select c2 from t1 where c1 = 2"; stmt2];
+ResultSet rs0 = SQL["select c2 from t1 where c1 = 1"; stmt2];
+ResultSet rs1 = SQL["select c2 from t1 where c1 = 2"; stmt2];
 
 IdealResultSet<Decimal> irs0;
 IdealResultSet<Decimal> irs1;
-IdealResultSet<Decimal> irs2;
-IdealResultSet<Decimal> irs3;
-IMPORT_IRS["tx_test"; irs0 0, irs1 1, irs2 2, irs3 3];
-VERIFY[rs1;==;irs0];
-VERIFY[rs2;==;irs1];
-VERIFY[rs3;==;irs2];
-VERIFY[rs4;==;irs3];
+
+IMPORT_IRS["tx_test"; irs0 0, irs1 1];
+VERIFY[rs0;==;irs0];
+VERIFY[rs1;==;irs1];
+
 
