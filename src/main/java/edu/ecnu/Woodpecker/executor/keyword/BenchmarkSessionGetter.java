@@ -84,7 +84,7 @@ public class BenchmarkSessionGetter extends Executor implements Keyword{
         String user = parts[3];
 
         JSch jsch = new JSch();// 创建JSch对象
-        jsch.addIdentity("../.ssh/id_rsa","");
+        jsch.addIdentity("~/.ssh/id_rsa","");
         Session session = jsch.getSession(user, host, port);// 根据用户名、主机ip、端口号获取一个Session对象
 
         Properties config = new Properties();
