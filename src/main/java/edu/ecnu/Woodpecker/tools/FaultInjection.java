@@ -43,12 +43,13 @@ public class FaultInjection {
         Integer size = Integer.parseInt(parts[3]);
         Integer time = Integer.parseInt(parts[4]);
 
-        String src = "tools/FaultInjection/seizeMEM";
+        String src = "tools/FaultInjection/seizeMEM.c";
         String dst = "/tmp/seizeMEM.c";
         String exe_file = "seizeMEM";
         Util.put(ip, user, connectionPort, src, dst);
 
         String cmd = "cd " + dst.substring(0,dst.lastIndexOf("/"))
+                + " && g++ " + exe_file +".c" + " -o " + exe_file
                 + " && ./" + exe_file
                 + " " + time + " " + size;
         String result = Util.exec(ip, user, connectionPort, cmd);
